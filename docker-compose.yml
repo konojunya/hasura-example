@@ -1,5 +1,16 @@
 version: "3.6"
 services:
+  remix:
+    build: ./web
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./web/app:/usr/server/app
+      - ./web/public:/usr/server/public
+  backend:
+    build: ./server
+    ports:
+      - "3002:3002"
   postgres:
     image: postgres:15
     restart: always
