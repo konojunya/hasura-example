@@ -17,15 +17,41 @@ export async function loader({ request }) {
   return json({ token: cookies.token });
 }
 
+async function fetchTodos(token) {
+  const url = "http://localhost:8080/v1/graphql";
+  const query = `query {
+    todos {
+      id
+      title
+    }
+  }`;
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ query }),
+  });
+
+  return await res.json();
+}
+
 export default function Profile() {
   const [user, setUser] = useState(null);
+  const [todos, setTodos] = useState([]);
   const data = useLoaderData();
 
   useEffect(() => {
-    loginWithCustomToken(data.token).then((cred) => {
+    loginWithCustomToken(data.token).then(async (cred) => {
       setUser({
         displayName: cred.user.displayName,
         photoURL: cred.user.photoURL,
+      });
+      const token = await cred.user.getIdToken();
+      fetchTodos(token).then((res) => {
+        setTodos(res.data.todos);
       });
     });
   }, []);
@@ -38,6 +64,11 @@ export default function Profile() {
     <div>
       <h1>Hello, {user.displayName}</h1>
       <img src={user.photoURL} alt="" width={100} height={100} />
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>{todo.title}</li>
+        ))}
+      </ul>
     </div>
   );
 }

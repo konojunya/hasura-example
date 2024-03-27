@@ -11,6 +11,7 @@ RUN pnpm i
 COPY . . 
 
 RUN pnpm build
+
 ENV NODE_ENV=production
 
 CMD ["pnpm", "start"]

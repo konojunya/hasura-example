@@ -11,6 +11,13 @@ services:
     build: ./server
     ports:
       - "3002:3002"
+    volumes:
+      - ./server/service-account.json:/usr/server/service-account.json
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: /usr/server/service-account.json
+      CLIENT_ID: ${CLIENT_ID}
+      CLIENT_SECRET: ${CLIENT_SECRET}
+      REDIRECT_URI: ${REDIRECT_URI}
   postgres:
     image: postgres:15
     restart: always
