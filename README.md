@@ -130,3 +130,9 @@ query {
   }
 }
 ```
+
+### migration file の作成
+
+```shell
+hasura migrate create create-tables --from-server
+```
