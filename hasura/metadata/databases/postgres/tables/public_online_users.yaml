@@ -1,0 +1,11 @@
+table:
+  name: online_users
+  schema: public
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - id
+        - last_seen
+      filter: {}
+    comment: ""

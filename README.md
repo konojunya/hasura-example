@@ -141,9 +141,29 @@ docker compose を建てた状態で
 hasura migrate create create-tables --from-server
 ```
 
-#### file の適当
+metadata (permission などを保持するため) の export も行う
+
+```shell
+hasura metadata export
+```
+
+#### file の適応
 
 ```shell
 hasura migrate apply
 hasura metadata apply
+```
+
+### seeds
+
+### file の作成
+
+```shell
+hasura seed create todos --from-table todos
+```
+
+### file の適応
+
+```shell
+hasura seed apply
 ```
