@@ -131,8 +131,19 @@ query {
 }
 ```
 
-### migration file の作成
+### migration
+
+#### file の作成
+
+docker compose を建てた状態で
 
 ```shell
 hasura migrate create create-tables --from-server
+```
+
+#### file の適当
+
+```shell
+hasura migrate apply
+hasura metadata apply
 ```
